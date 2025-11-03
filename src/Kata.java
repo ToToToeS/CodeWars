@@ -1,42 +1,26 @@
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class Kata {
+    public static String firstNonRepeatingLetter(String s) {
+        String smallS = s.toLowerCase();
+        Map<String, Integer> counter = new LinkedHashMap<>();
 
-    public static String high(String s) {
-        String[] words = s.split(" ");
-        String high = "";
-        Character c = 'd';
-
-
-        for (String word : words) {
-            int b = compare(high,word);
-            if (compare(high,word) <= 0) high = word;
+        for (String c : smallS.split("")) {
+            counter.put(c, counter.getOrDefault(c, 0) + 1);
         }
 
-
-        return high;
-    }
-
-    private static int compare(String str1, String str2) {
-        str1 = str1.toLowerCase();
-        str2 = str2.toLowerCase();
-
-        char[] chars1 = str1.toCharArray();
-        char[] chars2 = str2.toCharArray();
-
-        int sum1 = 0;
-        int sum2 = 0;
-
-        for (char c : chars1) {
-            sum1 += c - 96;
+        String symbol = "";
+        for (var key : counter.keySet()) {
+            if (counter.get(key) == 1) {
+                symbol = key;
+                break;
+            }
         }
 
-        for (char c : chars2) {
-            sum2 += c - 96;
+        for (var c : s.split("")) {
+            if (symbol.equalsIgnoreCase(c)) return c;
         }
-
-        return sum1 - sum2;
-    }
-
-    public static void main(String[] args) {
-        Kata.high("aa b");
+        return "";
     }
 }
